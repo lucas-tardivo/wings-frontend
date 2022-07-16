@@ -15,6 +15,8 @@ import Home from 'pages/Home'
 
 const App = () => {
   const { Moralis, isAuthenticated, account } = useMoralis()
+
+
   //const location = window.location.pathname;
   const [userData, setUserData] = useState({
     userWallet: null,
@@ -38,7 +40,8 @@ const App = () => {
 
   useEffect(() => {
     if (userData.userWallet) {
-      checkAllowance('BUSD')
+
+      checkAllowance('MISADTest')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData.refetch])
@@ -51,10 +54,11 @@ const App = () => {
     try {
       const response = await Moralis.Web3API.token.getTokenAllowance({
         address: contractAddressByType[token],
-        spender_address: '0xB871b2E470576BaF99eBee563472d2468c02b18B',
+        spender_address: '0x3e0e7d15d5678523a4586e2eaade3ee98ba5a284',
         owner_address: account,
-        chain: 'bsc'
+        chain: 'bsc testnet'
       })
+      console.log('response', response?.allowance)
       return setUserData({
         ...userData,
         userAllowance: {
